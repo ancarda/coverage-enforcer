@@ -1,0 +1,72 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use Ancarda\CodeCoverage\Auditor;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface as Input;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface as Output;
+use Symfony\Component\Console\SingleCommandApplication;
+
+$autoloadPaths = [
+    __DIR__ . '/../../../autoload.php',
+    __DIR__ . '/../vendor/autoload.php',
+];
+foreach ($autoloadPaths as $candidate) {
+    if (file_exists($candidate)) {
+        require_once($candidate);
+    }
+}
+unset($candidate);
+unset($autoloadPaths);
+
+define('DEFAULT_STATEMENT_COVERAGE', 80);
+
+(new SingleCommandApplication())
+    ->setName('Coverage Enforcer')
+    ->setVersion('1.0.0')
+    ->addOption(
+        'minStmtCov',
+        null,
+        InputOption::VALUE_REQUIRED,
+        'Percentage of statements (usually one per line) need to be covered to pass. Number between 0 and 100.',
+        DEFAULT_STATEMENT_COVERAGE
+    )
+    ->addArgument(
+        'cloverPath',
+        InputArgument::REQUIRED,
+        'Path to Clover XML file'
+    )
+    ->setCode(function (Input $input, Output $output): int {
+        $stmtTarget = $input->getOption('minStmtCov');
+        $stmtTarget = is_string($stmtTarget)
+            ? floatval($stmtTarget)
+            : DEFAULT_STATEMENT_COVERAGE;
+
+        if ($stmtTarget === 0.0) {
+            $output->writeln('Required Statement Coverage cannot be zero: no-op.');
+            return 1;
+        }
+        if ($stmtTarget < 0 || $stmtTarget > 100) {
+            $output->writeln('Required Statement Coverage is a percentage and cannot be outside the range [0-100].');
+            return 1;
+        }
+
+        $file = $input->getArgument('cloverPath');
+        if (!is_string($file)) {
+            $output->writeln('Expected a path?');
+            return 1;
+        }
+
+        try {
+            Auditor::assertStatementsCovered($file, $stmtTarget);
+        } catch (Exception $ex) {
+            $output->writeln($ex->getMessage());
+            return $ex->getCode();
+        }
+
+        return 0;
+    })
+    ->run();

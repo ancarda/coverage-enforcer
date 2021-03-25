@@ -1,0 +1,26 @@
+{
+    "name": "ancarda/coverage-enforcer",
+    "description": "Enforces a minimum Code Coverage using a Coverage Clover XML file",
+    "type": "library",
+    "license": "MIT",
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Ancarda\\CodeCoverage\\": "src"
+        }
+    },
+    "autoload-dev": {
+    },
+    "require": {
+        "php": "^7.3",
+        "ext-simplexml": "*",
+        "symfony/console": "^5.2"
+    },
+    "require-dev": {
+    },
+    "bin": [
+        "bin/enforce-coverage"
+    ]
+}
