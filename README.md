@@ -6,7 +6,7 @@ code coverage from falling to unacceptable levels.
 
 Pull down with composer:
 
-    composer require --dev ancarda/enforce-coverage
+    composer require --dev ancarda/coverage-enforcer
 
 Then just invoke like so:
 
