@@ -6,6 +6,7 @@ namespace Ancarda\CodeCoverage;
 
 use RuntimeException;
 use SimpleXMLElement;
+use libXMLError;
 
 final class Auditor
 {
@@ -21,10 +22,18 @@ final class Auditor
             );
         }
 
+        // Restore the LibXML error state
+        $usePhpErrors = libxml_use_internal_errors(true);
         $file = simplexml_load_file($filePath);
+        libxml_use_internal_errors($usePhpErrors);
+
         if ($file === false) {
+            // Since $file is false, there is garanteed to be an error
+            /** @var libXMLError $lastError */
+            $lastError = libxml_get_last_error();
+
             throw new RuntimeException(
-                sprintf('Failed to read or parse %s', $filePath),
+                sprintf('Parse Error: %s', $lastError->message),
                 self::EXIT_MISC
             );
         }
@@ -32,9 +41,15 @@ final class Auditor
         return $file;
     }
 
+    /**
+     * Pretty format a float
+     *
+     * This function formats a float like an integer if it's fractional part
+     * is zero, whereas formats it with two decimal places for a non-zero
+     * fractional part.
+     */
     private static function formatNumber(float $num): string
     {
-        // if the number is an integer, just return that
         if ($num == intval($num)) {
             return (string) intval($num);
         }
@@ -53,7 +68,6 @@ final class Auditor
         if ($target > $coverage) {
             throw new RuntimeException(
                 sprintf(
-                    //'Coverage is %f%%, but needs to be %s%f%%',
                     'Coverage is %s%%, but needs to be %s%s%%',
                     self::formatNumber($coverage),
                     ($target < 100) ? 'at-least ' : '',
