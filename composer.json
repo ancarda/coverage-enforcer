@@ -1,7 +1,7 @@
 {
     "name": "ancarda/coverage-enforcer",
     "description": "Enforces a minimum Code Coverage using a Coverage Clover XML file",
-    "type": "library",
+    "type": "project",
     "license": "MIT",
     "config": {
         "sort-packages": true
