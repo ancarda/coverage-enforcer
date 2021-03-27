@@ -1,6 +1,6 @@
 # Coverage Enforcer
 
-[![builds.sr.ht status](https://builds.sr.ht/~ancarda/coverage-enforcer.svg)](https://builds.sr.ht/~ancarda/coverage-enforcer?)
+[![builds.sr.ht status](https://builds.sr.ht/~ancarda/coverage-enforcer.svg)](https://builds.sr.ht/~ancarda/coverage-enforcer)
 
 Coverage Enforcer is a tiny command line tool that enforces code coverage
 metrics. Intended to be used in Continuous Integration (CI) systems to prevent
