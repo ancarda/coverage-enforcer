@@ -1,8 +1,11 @@
 ---
 image: debian/buster
 
+secrets:
+ - cde47d09-64da-4651-a62e-bf762c4dec73
+
 sources:
-  - https://git.sr.ht/~ancarda/psr7-string-stream
+  - https://git.sr.ht/~ancarda/coverage-enforcer
 
 packages:
   - php7.3-cli
@@ -18,7 +21,7 @@ packages:
   - unzip
 
 environment:
-  DIR: psr7-string-stream
+  DIR: coverage-enforcer
   XDEBUG_MODE: coverage
 
 tasks:
@@ -28,3 +31,4 @@ tasks:
   - test:        cd $DIR && composer run-script test
   - check-cov:   cd $DIR && composer run-script check-coverage
   - check-tests: cd $DIR && composer run-script check-tests
+  - packagist:   cd $DIR && .builds/poke-packagist ancarda coverage-enforcer ~/.packagist-api-token

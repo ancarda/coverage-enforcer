@@ -43,7 +43,13 @@ final class AudiorTest extends TestCase
         $filePath = __DIR__ . '/files/parse-failure.xml';
 
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Parse Error: EndTag: \'</\' not found');
+
+        // LibXML error messages are different on PHP 7.3.x.
+        if (PHP_VERSION_ID < 70400) {
+            $this->expectExceptionMessage('Parse Error: Premature end of data');
+        } else {
+            $this->expectExceptionMessage('Parse Error: EndTag: \'</\' not found');
+        }
 
         Auditor::assertStatementsCovered($filePath, 100);
     }
