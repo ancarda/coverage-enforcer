@@ -31,4 +31,4 @@ tasks:
   - test:        cd $DIR && composer run-script test
   - check-cov:   cd $DIR && composer run-script check-coverage
   - check-tests: cd $DIR && composer run-script check-tests
-  - packagist:   cd $DIR && .builds/poke-packagist ancarda coverage-enforcer ~/.packagist-api-token
+  - packagist:   cd $DIR && .builds/poke-packagist ancarda $DIR ~/.packagist-api-token
