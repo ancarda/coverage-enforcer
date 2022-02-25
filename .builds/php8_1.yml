@@ -1,19 +1,16 @@
 ---
-image: debian/sid
+image: debian/bookworm
 
 sources:
   - https://git.sr.ht/~ancarda/coverage-enforcer
 
 packages:
-  - php8.0-cli
+  - php8.1-cli
   - composer
-
-  # PHP 8.0 on debian/sid does not come with mbstring by default?
-  # See: https://builds.sr.ht/~ancarda/job/453331
-  - php8.0-mbstring
+  - php8.1-mbstring
 
   # some dev tools use XML config files
-  - php8.0-xml
+  - php8.1-xml
 
   # for code coverage (phpunit and infection)
   - php-xdebug
@@ -30,7 +27,5 @@ tasks:
   - analyze:     cd $DIR && composer run-script analyze
   - check-style: cd $DIR && composer run-script check-style
   - test:        cd $DIR && composer run-script test
-
-  # coverage is not yet working on PHP 8.0
-  # See: https://builds.sr.ht/~ancarda/job/453338#task-check-tests
-  # - check-tests: cd $DIR && composer run-script check-tests
+  - check-cov:   cd $DIR && composer run-script check-coverage
+  - check-tests: cd $DIR && composer run-script check-tests

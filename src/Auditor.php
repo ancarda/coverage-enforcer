@@ -61,8 +61,8 @@ final class Auditor
     {
         $clover = self::loadXML($filePath);
 
-        $stmtCovered = $clover->project->metrics['coveredstatements'];
-        $stmtCount   = $clover->project->metrics['statements'];
+        $stmtCovered = (int) $clover->project->metrics['coveredstatements'];
+        $stmtCount   = (int) $clover->project->metrics['statements'];
         $coverage = ($stmtCovered / $stmtCount) * 100;
 
         if ($target > $coverage) {

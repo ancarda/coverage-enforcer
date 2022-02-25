@@ -8,7 +8,12 @@
         "text": "var/infection.log"
     },
     "mutators": {
-        "@default": true
+        "@default": true,
+        "CastInt": {
+            "ignore": [
+                "Ancarda\\CodeCoverage\\Auditor::assertStatementsCovered"
+            ]
+        }
     },
     "minCoveredMsi": 100
 }
