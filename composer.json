@@ -4,6 +4,9 @@
     "type": "project",
     "license": "MIT",
     "config": {
+        "allow-plugins": {
+            "infection/extension-installer": true
+        },
         "platform": {
             "php": "7.3"
         },
@@ -22,7 +25,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "ext-simplexml": "*",
-        "symfony/console": "^5.1"
+        "symfony/console": "^5.1|^6.0"
     },
     "require-dev": {
         "composer/package-versions-deprecated": "1.11.99.1",
