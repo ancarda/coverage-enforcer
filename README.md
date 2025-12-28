@@ -6,7 +6,7 @@
 [![builds.sr.ht status](https://builds.sr.ht/~ancarda/coverage-enforcer.svg)](https://builds.sr.ht/~ancarda/coverage-enforcer)
 
 > [!NOTE]
-> This repository is no longer being maintained. Checkout [rregeer/phpunit-coverage-check] for an alternative tool.
+> This repository is no longer being maintained. Checkout [rregeer/phpunit-coverage-check](https://packagist.org/packages/rregeer/phpunit-coverage-check) for an alternative tool.
 
 Coverage Enforcer is a tiny command line tool that enforces code coverage
 metrics. Intended to be used in Continuous Integration (CI) systems to prevent
