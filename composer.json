@@ -1,5 +1,6 @@
 {
     "name": "ancarda/coverage-enforcer",
+    "abandoned": "rregeer/phpunit-coverage-check",
     "description": "Enforces a minimum Code Coverage using a Coverage Clover XML file",
     "type": "project",
     "license": "MIT",
